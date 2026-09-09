@@ -2,501 +2,566 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
 <title>CritterVault — Market</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6fb;
-    color: #222;
-    min-height: 100vh;
-}
-
-.navbar {
-    min-height: 72px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 32px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 900;
-    color: #5b45e8;
-    cursor: pointer;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    border: none;
-    background: transparent;
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.nav-btn:hover {
-    background: #f0efff;
-}
-
-.nav-btn.active {
-    background: #5b45e8;
-    color: white;
-}
-
-.coin-display {
-    background: #fff4c7;
-    color: #8b6500;
-    padding: 11px 17px;
-    border-radius: 20px;
-    font-weight: 800;
-    margin-left: 10px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 35px 25px 70px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-.hero {
-    background: linear-gradient(135deg, #6752f0, #8b68ff);
-    color: white;
-    border-radius: 22px;
-    padding: 38px;
-    margin-bottom: 30px;
-    box-shadow: 0 12px 35px rgba(91,69,232,0.25);
-}
-
-.hero h1 {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    opacity: 0.92;
-    font-size: 17px;
-}
-
-.balance-box {
-    margin-top: 20px;
-    display: inline-block;
-    background: rgba(255,255,255,0.18);
-    padding: 12px 18px;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 900;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.section-header h2 {
-    font-size: 27px;
-}
-
-.collection-count {
-    color: #666;
-    font-weight: 700;
-}
-
-.item-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-}
-
-.item-card {
-    background: white;
-    border-radius: 18px;
-    padding: 18px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-}
-
-.item-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 9px 25px rgba(0,0,0,0.11);
-}
-
-.item-image {
-    height: 155px;
-    border-radius: 14px;
-    background: #f1f2f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 76px;
-    margin-bottom: 15px;
-}
-
-.item-name {
-    font-size: 18px;
-    font-weight: 900;
-    margin-bottom: 7px;
-}
-
-.item-rarity {
-    font-size: 13px;
-    font-weight: 800;
-    margin-bottom: 13px;
-}
-
-.price {
-    font-weight: 900;
-    color: #8b6500;
-    background: #fff4c7;
-    padding: 7px 10px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-bottom: 12px;
-}
-
-.buy-btn {
-    width: 100%;
-    border: none;
-    background: #5b45e8;
-    color: white;
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.buy-btn:hover {
-    background: #4934d5;
-}
-
-.buy-btn:disabled {
-    background: #bbb;
-    cursor: not-allowed;
-}
-
-.common {
-    color: #777;
-}
-
-.uncommon {
-    color: #28a745;
-}
-
-.rare {
-    color: #2878df;
-}
-
-.epic {
-    color: #8b45db;
-}
-
-.legendary {
-    color: #e09a00;
-}
-
-.mythic {
-    color: #e04848;
-}
-
-.box-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-}
-
-.box-card {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-}
-
-.box-icon {
-    font-size: 90px;
-    margin-bottom: 15px;
-}
-
-.box-card h3 {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.box-card p {
-    color: #666;
-    margin-bottom: 18px;
-    line-height: 1.5;
-}
-
-.open-btn {
-    border: none;
-    background: #5b45e8;
-    color: white;
-    padding: 13px 25px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.open-btn:hover {
-    background: #4934d5;
-}
-
-.open-btn:disabled {
-    background: #bbb;
-    cursor: not-allowed;
-}
-
-.inventory-empty {
-    background: white;
-    padding: 60px 20px;
-    text-align: center;
-    border-radius: 18px;
-    color: #777;
-}
-
-.inventory-empty div {
-    font-size: 60px;
-    margin-bottom: 15px;
-}
-
-.profile-card {
-    background: white;
-    border-radius: 20px;
-    padding: 35px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-    text-align: center;
-}
-
-.avatar {
-    font-size: 90px;
-    margin-bottom: 15px;
-}
-
-.profile-card h2 {
-    margin-bottom: 8px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.stat {
-    background: #f4f5fa;
-    padding: 20px;
-    border-radius: 14px;
-}
-
-.stat-number {
-    font-size: 27px;
-    font-weight: 900;
-    color: #5b45e8;
-    margin-bottom: 5px;
-}
-
-.stat-label {
-    color: #777;
-}
-
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-    padding: 20px;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-content {
-    background: white;
-    border-radius: 25px;
-    width: min(450px, 100%);
-    padding: 35px;
-    text-align: center;
-    animation: pop 0.25s ease;
-}
-
-@keyframes pop {
-    from {
-        transform: scale(0.75);
-        opacity: 0;
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.reward-icon {
-    font-size: 110px;
-    margin: 20px;
-    animation: bounce 0.7s ease;
-}
-
-@keyframes bounce {
-    0% {
-        transform: scale(0.2) rotate(-20deg);
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f3f5fb;
+        color: #252a3a;
+        min-height: 100vh;
     }
 
-    60% {
-        transform: scale(1.15) rotate(8deg);
-    }
-
-    100% {
-        transform: scale(1) rotate(0);
-    }
-}
-
-.reward-title {
-    font-size: 29px;
-    font-weight: 900;
-    margin-bottom: 8px;
-}
-
-.reward-rarity {
-    font-size: 17px;
-    font-weight: 900;
-    margin-bottom: 20px;
-}
-
-.close-btn {
-    border: none;
-    background: #222;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.toast {
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #222;
-    color: white;
-    padding: 14px 22px;
-    border-radius: 12px;
-    font-weight: 700;
-    transition: transform 0.3s;
-    z-index: 1000;
-}
-
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-}
-
-@media (max-width: 900px) {
-
-    .item-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .box-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 650px) {
-
-    .navbar {
-        height: auto;
-        padding: 14px;
-        flex-wrap: wrap;
-        gap: 10px;
+    header {
+        background: white;
+        border-bottom: 2px solid #e6e8f0;
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
     }
 
     .logo {
-        width: 100%;
-    }
-
-    .nav-buttons {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .nav-btn {
+        font-size: 25px;
+        font-weight: 900;
+        cursor: pointer;
         white-space: nowrap;
     }
 
-    .coin-display {
-        margin-left: 0;
+    .nav-buttons {
+        display: flex;
+        gap: 8px;
+        flex: 1;
     }
 
-    .container {
-        padding: 20px 14px 50px;
+    .nav-btn {
+        border: none;
+        background: transparent;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        color: #62697d;
+    }
+
+    .nav-btn:hover {
+        background: #f0f2f8;
+        color: #252a3a;
+    }
+
+    .nav-btn.active {
+        background: #e9e7ff;
+        color: #5948d8;
+    }
+
+    .coin-display {
+        background: #fff6d8;
+        border: 2px solid #f3d36a;
+        padding: 9px 15px;
+        border-radius: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 30px 20px 60px;
+    }
+
+    .page {
+        display: none;
+    }
+
+    .page.active {
+        display: block;
     }
 
     .hero {
-        padding: 25px;
+        background: linear-gradient(135deg, #6656e8, #8b75ff);
+        color: white;
+        padding: 40px;
+        border-radius: 24px;
+        margin-bottom: 30px;
+        box-shadow: 0 12px 30px rgba(91, 76, 200, 0.2);
     }
 
     .hero h1 {
-        font-size: 30px;
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    .hero p {
+        font-size: 17px;
+        opacity: 0.94;
+        line-height: 1.6;
+    }
+
+    .balance-box {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.18);
+        font-weight: 800;
+    }
+
+    .balance-box span {
+        font-size: 20px;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+        font-size: 25px;
+    }
+
+    .collection-count {
+        background: white;
+        border: 2px solid #e6e8f0;
+        padding: 9px 14px;
+        border-radius: 10px;
+        font-weight: 800;
     }
 
     .item-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .item-card {
+        background: white;
+        border: 2px solid #e7e9f1;
+        border-radius: 18px;
+        padding: 20px;
+        text-align: center;
+        transition: 0.2s;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .item-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .item-icon {
+        font-size: 65px;
+        margin-bottom: 10px;
+    }
+
+    .item-name {
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 7px;
+    }
+
+    .rarity {
+        display: inline-block;
+        padding: 5px 9px;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 900;
+        margin-bottom: 12px;
+    }
+
+    .common {
+        background: #e9edf3;
+        color: #596171;
+    }
+
+    .uncommon {
+        background: #ddf7df;
+        color: #26843a;
+    }
+
+    .rare {
+        background: #dceeff;
+        color: #2170ba;
+    }
+
+    .epic {
+        background: #eee0ff;
+        color: #7541bb;
+    }
+
+    .legendary {
+        background: #fff0c9;
+        color: #b67a00;
+    }
+
+    .mythic {
+        background: #ffdff2;
+        color: #b02672;
+    }
+
+    .item-price {
+        font-weight: 900;
+        margin-bottom: 12px;
+        font-size: 17px;
+    }
+
+    .buy-btn,
+    .open-btn,
+    .close-btn {
+        border: none;
+        border-radius: 10px;
+        padding: 11px 16px;
+        font-weight: 900;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .buy-btn {
+        background: #6252df;
+        color: white;
+        width: 100%;
+    }
+
+    .buy-btn:hover,
+    .open-btn:hover,
+    .close-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.05);
+    }
+
+    .buy-btn:disabled {
+        background: #c8cad3;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .box-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
+
+    .box-card {
+        background: white;
+        border: 2px solid #e7e9f1;
+        border-radius: 20px;
+        padding: 28px;
+        text-align: center;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .box-icon {
+        font-size: 80px;
+        margin-bottom: 15px;
+    }
+
+    .box-card h3 {
+        font-size: 23px;
+        margin-bottom: 10px;
+    }
+
+    .box-card p {
+        color: #686f82;
+        line-height: 1.55;
+        min-height: 75px;
+    }
+
+    .price {
+        font-size: 20px;
+        font-weight: 900;
+        margin-top: 20px;
+    }
+
+    .open-btn {
+        background: #6252df;
+        color: white;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #inventory-items {
+        display: grid;
+        gap: 14px;
+    }
+
+    .inventory-item {
+        background: white;
+        border: 2px solid #e7e9f1;
+        border-radius: 15px;
+        padding: 17px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .inventory-icon {
+        font-size: 45px;
+    }
+
+    .inventory-info {
+        flex: 1;
+    }
+
+    .inventory-name {
+        font-size: 19px;
+        font-weight: 900;
+    }
+
+    .empty-inventory {
+        background: white;
+        border: 2px dashed #d8dbe5;
+        border-radius: 18px;
+        padding: 50px 20px;
+        text-align: center;
+        color: #777d8d;
+    }
+
+    .profile-card {
+        max-width: 650px;
+        margin: auto;
+        background: white;
+        border: 2px solid #e7e9f1;
+        border-radius: 25px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .avatar {
+        font-size: 75px;
+        margin-bottom: 15px;
+    }
+
+    .profile-card h2 {
+        margin-bottom: 8px;
+    }
+
+    .profile-card > p {
+        color: #74798a;
     }
 
     .stats {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 30px;
     }
-}
+
+    .stat {
+        background: #f5f6fb;
+        border-radius: 14px;
+        padding: 18px 10px;
+    }
+
+    .stat-number {
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: #74798a;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(24, 27, 40, 0.65);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 500;
+        padding: 20px;
+    }
+
+    .modal.show {
+        display: flex;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 25px;
+        padding: 35px;
+        width: min(430px, 100%);
+        text-align: center;
+        animation: pop 0.25s ease;
+    }
+
+    @keyframes pop {
+        from {
+            transform: scale(0.85);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .modal-content h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .reward-icon {
+        font-size: 100px;
+        margin-bottom: 10px;
+    }
+
+    .reward-title {
+        font-size: 28px;
+        font-weight: 900;
+        margin-bottom: 8px;
+    }
+
+    .reward-rarity {
+        font-weight: 900;
+        margin-bottom: 25px;
+    }
+
+    .close-btn {
+        background: #6252df;
+        color: white;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .toast {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background: #252a3a;
+        color: white;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-weight: 800;
+        opacity: 0;
+        transform: translateY(15px);
+        pointer-events: none;
+        transition: 0.25s;
+        z-index: 1000;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+        .item-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .box-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 700px) {
+        header {
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .logo {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            order: 3;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .nav-btn {
+            white-space: nowrap;
+        }
+
+        .coin-display {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+        }
+
+        main {
+            padding: 20px 12px 40px;
+        }
+
+        .hero {
+            padding: 28px 22px;
+        }
+
+        .hero h1 {
+            font-size: 27px;
+        }
+
+        .item-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .section-header {
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .section-header h2 {
+            font-size: 21px;
+        }
+
+        .collection-count {
+            font-size: 13px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .item-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .coin-display {
+            font-size: 13px;
+            padding: 7px 10px;
+        }
+
+        .logo {
+            padding-right: 100px;
+        }
+    }
 </style>
+```
 
 </head>
 
 <body>
 
-<nav class="navbar">
+<header>
 
-
+```
 <div class="logo" onclick="showPage('market')">
     🐾 CritterVault
 </div>
@@ -532,13 +597,13 @@ body {
 <div class="coin-display">
     🪙 <span id="coins">10,000</span>
 </div>
+```
 
+</header>
 
-</nav>
+<main>
 
-<main class="container">
-
-
+```
 <section id="market" class="page active">
 
     <div class="hero">
@@ -777,13 +842,13 @@ body {
     </div>
 
 </section>
-
+```
 
 </main>
 
 <div class="modal" id="reward-modal">
 
-
+```
 <div class="modal-content">
 
     <h2>
@@ -808,7 +873,7 @@ body {
     </button>
 
 </div>
-
+```
 
 </div>
 
@@ -816,631 +881,665 @@ body {
 
 <script>
 
-const critters = [
-
-    {
-        id: "spark",
-        name: "Spark",
-        emoji: "⚡",
-        rarity: "Common",
-        price: 100
-    },
-
-    {
-        id: "puff",
-        name: "Puff",
-        emoji: "☁️",
-        rarity: "Common",
-        price: 120
-    },
-
-    {
-        id: "leafy",
-        name: "Leafy",
-        emoji: "🌿",
-        rarity: "Common",
-        price: 150
-    },
-
-    {
-        id: "bubble",
-        name: "Bubble",
-        emoji: "🫧",
-        rarity: "Uncommon",
-        price: 250
-    },
-
-    {
-        id: "berry",
-        name: "Berry",
-        emoji: "🍓",
-        rarity: "Uncommon",
-        price: 275
-    },
-
-    {
-        id: "frost",
-        name: "Frost",
-        emoji: "❄️",
-        rarity: "Rare",
-        price: 400
-    },
-
-    {
-        id: "shadow",
-        name: "Shadow",
-        emoji: "🌑",
-        rarity: "Rare",
-        price: 450
-    },
-
-    {
-        id: "neon",
-        name: "Neon",
-        emoji: "🌈",
-        rarity: "Epic",
-        price: 700
-    },
-
-    {
-        id: "galaxy",
-        name: "Galaxy",
-        emoji: "🌌",
-        rarity: "Epic",
-        price: 850
-    },
-
-    {
-        id: "dragon",
-        name: "Dragon",
-        emoji: "🐉",
-        rarity: "Legendary",
-        price: 1500
-    },
-
-    {
-        id: "phoenix",
-        name: "Phoenix",
-        emoji: "🔥",
-        rarity: "Legendary",
-        price: 1800
-    },
-
-    {
-        id: "cosmic",
-        name: "Cosmic",
-        emoji: "🌠",
-        rarity: "Mythic",
-        price: 3500
-    }
-
-];
-
-
-/*
-==========================================
-TEST MODE
-==========================================
-
-IMPORTANT:
-
-We are NOT loading coins from localStorage.
-
-Every time the page loads, you get
-10,000 coins.
-
-Your inventory and coins-spent stats
-are still saved.
-==========================================
-*/
-
-let coins = 10000;
-
-let inventory =
-    JSON.parse(localStorage.getItem("cv_inventory")) || {};
-
-let coinsSpent =
-    Number(localStorage.getItem("cv_spent")) || 0;
-
-
-function saveData() {
-
-    localStorage.setItem(
-        "cv_inventory",
-        JSON.stringify(inventory)
-    );
-
-    localStorage.setItem(
-        "cv_spent",
-        coinsSpent
-    );
-
-}
-
-
-function updateUI() {
-
-    const formattedCoins =
-        coins.toLocaleString();
-
-    document.getElementById("coins").textContent =
-        formattedCoins;
-
-    document.getElementById("market-balance").textContent =
-        formattedCoins;
-
-    document.getElementById("boxes-balance").textContent =
-        formattedCoins;
-
-    document.getElementById("inventory-balance").textContent =
-        formattedCoins;
-
-    document.getElementById("profile-coins").textContent =
-        formattedCoins;
-
-    document.getElementById("profile-spent").textContent =
-        coinsSpent.toLocaleString();
-
-    const owned =
-        Object.keys(inventory).length;
-
-    document.getElementById("market-owned").textContent =
-        owned;
-
-    document.getElementById("inventory-count").textContent =
-        owned;
-
-    document.getElementById("profile-items").textContent =
-        owned;
-
-    renderMarket();
-
-    renderInventory();
-
-}
-
-
-function renderMarket() {
-
-    const container =
-        document.getElementById("market-items");
-
-    container.innerHTML = "";
-
-    critters.forEach(item => {
-
-        const owned =
-            inventory[item.id] || 0;
-
-        const card =
-            document.createElement("div");
-
-        card.className = "item-card";
-
-        card.innerHTML = `
-
-            <div class="item-image">
-                ${item.emoji}
-            </div>
-
-            <div class="item-name">
-                ${item.name}
-            </div>
-
-            <div class="item-rarity ${item.rarity.toLowerCase()}">
-                ${item.rarity}
-            </div>
-
-            <div class="price">
-                🪙 ${item.price.toLocaleString()}
-            </div>
-
-            ${
-                owned > 0
-                ?
-                `
-                <div style="
-                    margin-bottom:10px;
-                    color:#666;
-                    font-weight:700;
-                ">
-                    Owned: ${owned}
-                </div>
-                `
-                :
-                ""
-            }
-
-            <button
-                class="buy-btn"
-                onclick="buyItem('${item.id}')"
-                ${coins < item.price ? "disabled" : ""}
-            >
-                Buy
-            </button>
-
-        `;
-
-        container.appendChild(card);
-
-    });
-
-}
-
-
-function buyItem(id) {
-
-    const item =
-        critters.find(c => c.id === id);
-
-    if (!item) {
-        return;
-    }
-
-    if (coins < item.price) {
-
-        showToast("Not enough coins!");
-
-        return;
-    }
-
-    coins -= item.price;
-
-    coinsSpent += item.price;
-
-    inventory[id] =
-        (inventory[id] || 0) + 1;
-
-    saveData();
-
-    updateUI();
-
-    showToast(
-        `You bought ${item.name}! ${item.emoji}`
-    );
-
-}
-
-
-function renderInventory() {
-
-    const container =
-        document.getElementById("inventory-items");
-
-    container.innerHTML = "";
-
-    const ownedItems =
-        critters.filter(
-            item => inventory[item.id]
-        );
-
-    if (ownedItems.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="inventory-empty">
-
-                <div>
-                    🎒
-                </div>
-
-                <h2>
-                    Your inventory is empty
-                </h2>
-
-                <p>
-                    Visit the Market or open a Mystery Box
-                    to get your first Critter!
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-    const grid =
-        document.createElement("div");
-
-    grid.className = "item-grid";
-
-    ownedItems.forEach(item => {
-
-        const quantity =
-            inventory[item.id];
-
-        const card =
-            document.createElement("div");
-
-        card.className = "item-card";
-
-        card.innerHTML = `
-
-            <div class="item-image">
-                ${item.emoji}
-            </div>
-
-            <div class="item-name">
-                ${item.name}
-            </div>
-
-            <div class="item-rarity ${item.rarity.toLowerCase()}">
-                ${item.rarity}
-            </div>
-
-            <div style="
-                font-weight:800;
-                color:#666;
-                margin-top:8px;
-            ">
-                Owned × ${quantity}
-            </div>
-
-        `;
-
-        grid.appendChild(card);
-
-    });
-
-    container.appendChild(grid);
-
-}
-
-
-function chooseRandomBoxItem(type) {
-
-    let available = [];
-
-    if (type === "basic") {
-
-        const roll = Math.random();
-
-        if (roll < 0.65) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Common"
-                );
-
-        } else if (roll < 0.90) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Uncommon"
-                );
-
-        } else {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Rare"
-                );
-
+    const critters = [
+
+        {
+            id: 1,
+            name: "Spark",
+            icon: "⚡",
+            rarity: "Common",
+            price: 100
+        },
+
+        {
+            id: 2,
+            name: "Puff",
+            icon: "☁️",
+            rarity: "Common",
+            price: 120
+        },
+
+        {
+            id: 3,
+            name: "Leafy",
+            icon: "🌿",
+            rarity: "Common",
+            price: 150
+        },
+
+        {
+            id: 4,
+            name: "Bubble",
+            icon: "🫧",
+            rarity: "Uncommon",
+            price: 250
+        },
+
+        {
+            id: 5,
+            name: "Berry",
+            icon: "🍓",
+            rarity: "Uncommon",
+            price: 275
+        },
+
+        {
+            id: 6,
+            name: "Frost",
+            icon: "❄️",
+            rarity: "Rare",
+            price: 400
+        },
+
+        {
+            id: 7,
+            name: "Shadow",
+            icon: "🌑",
+            rarity: "Rare",
+            price: 450
+        },
+
+        {
+            id: 8,
+            name: "Neon",
+            icon: "🌈",
+            rarity: "Epic",
+            price: 700
+        },
+
+        {
+            id: 9,
+            name: "Galaxy",
+            icon: "🌌",
+            rarity: "Epic",
+            price: 850
+        },
+
+        {
+            id: 10,
+            name: "Dragon",
+            icon: "🐉",
+            rarity: "Legendary",
+            price: 1500
+        },
+
+        {
+            id: 11,
+            name: "Phoenix",
+            icon: "🔥",
+            rarity: "Legendary",
+            price: 1800
+        },
+
+        {
+            id: 12,
+            name: "Cosmic",
+            icon: "🌠",
+            rarity: "Mythic",
+            price: 3500
         }
 
-    }
-
-
-    if (type === "super") {
-
-        const roll = Math.random();
-
-        if (roll < 0.35) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Common"
-                );
-
-        } else if (roll < 0.65) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Uncommon"
-                );
-
-        } else if (roll < 0.90) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Rare"
-                );
-
-        } else {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Epic"
-                );
-
-        }
-
-    }
-
-
-    if (type === "legend") {
-
-        const roll = Math.random();
-
-        if (roll < 0.10) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Rare"
-                );
-
-        } else if (roll < 0.45) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Epic"
-                );
-
-        } else if (roll < 0.90) {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Legendary"
-                );
-
-        } else {
-
-            available =
-                critters.filter(
-                    item => item.rarity === "Mythic"
-                );
-
-        }
-
-    }
-
-    return available[
-        Math.floor(
-            Math.random() * available.length
-        )
     ];
 
-}
+
+    let coins = 10000;
+
+    let inventory =
+        JSON.parse(localStorage.getItem("cv_inventory")) || [];
+
+    let spent =
+        Number(localStorage.getItem("cv_spent")) || 0;
 
 
-function openBox(type) {
+    const boxSettings = {
 
-    const prices = {
+        basic: {
+            price: 100,
+            chances: [
+                ["Common", 65],
+                ["Uncommon", 25],
+                ["Rare", 10]
+            ]
+        },
 
-        basic: 100,
+        super: {
+            price: 300,
+            chances: [
+                ["Common", 35],
+                ["Uncommon", 30],
+                ["Rare", 25],
+                ["Epic", 10]
+            ]
+        },
 
-        super: 300,
-
-        legend: 750
+        legend: {
+            price: 750,
+            chances: [
+                ["Rare", 10],
+                ["Epic", 35],
+                ["Legendary", 45],
+                ["Mythic", 10]
+            ]
+        }
 
     };
 
-    const price =
-        prices[type];
 
-    if (!price) {
-        return;
+    function saveData() {
+
+        localStorage.setItem(
+            "cv_inventory",
+            JSON.stringify(inventory)
+        );
+
+        localStorage.setItem(
+            "cv_spent",
+            spent
+        );
+
     }
 
-    if (coins < price) {
 
-        showToast("Not enough coins!");
+    function showPage(page) {
 
-        return;
+        document.querySelectorAll(".page")
+            .forEach(section => {
+                section.classList.remove("active");
+            });
+
+        document.getElementById(page)
+            .classList.add("active");
+
+
+        document.querySelectorAll(".nav-btn")
+            .forEach(button => {
+                button.classList.remove("active");
+            });
+
+
+        const navButton =
+            document.getElementById("nav-" + page);
+
+        if (navButton) {
+            navButton.classList.add("active");
+        }
+
+
+        updateUI();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     }
 
-    const reward =
-        chooseRandomBoxItem(type);
 
-    if (!reward) {
-        showToast("Something went wrong!");
-        return;
+    function updateUI() {
+
+        const formattedCoins =
+            coins.toLocaleString();
+
+
+        const coinDisplay =
+            document.getElementById("coins");
+
+        if (coinDisplay) {
+            coinDisplay.textContent =
+                formattedCoins;
+        }
+
+
+        const marketBalance =
+            document.getElementById("market-balance");
+
+        if (marketBalance) {
+            marketBalance.textContent =
+                formattedCoins;
+        }
+
+
+        const boxesBalance =
+            document.getElementById("boxes-balance");
+
+        if (boxesBalance) {
+            boxesBalance.textContent =
+                formattedCoins;
+        }
+
+
+        const inventoryBalance =
+            document.getElementById("inventory-balance");
+
+        if (inventoryBalance) {
+            inventoryBalance.textContent =
+                formattedCoins;
+        }
+
+
+        const profileCoins =
+            document.getElementById("profile-coins");
+
+        if (profileCoins) {
+            profileCoins.textContent =
+                formattedCoins;
+        }
+
+
+        const marketOwned =
+            document.getElementById("market-owned");
+
+        if (marketOwned) {
+            marketOwned.textContent =
+                inventory.length;
+        }
+
+
+        const inventoryCount =
+            document.getElementById("inventory-count");
+
+        if (inventoryCount) {
+            inventoryCount.textContent =
+                inventory.length;
+        }
+
+
+        const profileItems =
+            document.getElementById("profile-items");
+
+        if (profileItems) {
+            profileItems.textContent =
+                inventory.length;
+        }
+
+
+        const profileSpent =
+            document.getElementById("profile-spent");
+
+        if (profileSpent) {
+            profileSpent.textContent =
+                spent.toLocaleString();
+        }
+
+
+        renderMarket();
+
+        renderInventory();
+
     }
 
-    coins -= price;
 
-    coinsSpent += price;
+    function renderMarket() {
 
-    inventory[reward.id] =
-        (inventory[reward.id] || 0) + 1;
+        const container =
+            document.getElementById("market-items");
 
-    saveData();
-
-    updateUI();
-
-    showReward(reward);
-
-}
+        if (!container) {
+            return;
+        }
 
 
-function showReward(item) {
-
-    document.getElementById("reward-icon").textContent =
-        item.emoji;
-
-    document.getElementById("reward-title").textContent =
-        item.name;
-
-    const rarity =
-        document.getElementById("reward-rarity");
-
-    rarity.textContent =
-        item.rarity;
-
-    rarity.className =
-        "reward-rarity " +
-        item.rarity.toLowerCase();
-
-    document.getElementById("reward-modal")
-        .classList.add("show");
-
-}
+        container.innerHTML = "";
 
 
-function closeReward() {
+        critters.forEach(critter => {
 
-    document.getElementById("reward-modal")
-        .classList.remove("show");
-
-}
+            const owned =
+                inventory.includes(critter.id);
 
 
-function showPage(page) {
+            const card =
+                document.createElement("div");
 
-    document.querySelectorAll(".page")
-        .forEach(section => {
+            card.className = "item-card";
 
-            section.classList.remove("active");
+
+            card.innerHTML = `
+
+                <div class="item-icon">
+                    ${critter.icon}
+                </div>
+
+                <div class="item-name">
+                    ${critter.name}
+                </div>
+
+                <div class="rarity ${critter.rarity.toLowerCase()}">
+                    ${critter.rarity}
+                </div>
+
+                <div class="item-price">
+                    🪙 ${critter.price.toLocaleString()}
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="buyCritter(${critter.id})"
+                    ${owned ? "disabled" : ""}>
+
+                    ${owned ? "Owned ✓" : "Buy"}
+
+                </button>
+
+            `;
+
+
+            container.appendChild(card);
 
         });
 
-    const selectedPage =
-        document.getElementById(page);
-
-    if (selectedPage) {
-        selectedPage.classList.add("active");
     }
 
-    document.querySelectorAll(".nav-btn")
-        .forEach(button => {
 
-            button.classList.remove("active");
+    function renderInventory() {
+
+        const container =
+            document.getElementById("inventory-items");
+
+        if (!container) {
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        if (inventory.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-inventory">
+
+                    <div style="font-size:60px;margin-bottom:15px;">
+                        🎒
+                    </div>
+
+                    <h2>
+                        Your inventory is empty
+                    </h2>
+
+                    <p style="margin-top:8px;">
+                        Visit the Market or open a Mystery Box
+                        to collect your first Critter!
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        inventory.forEach(id => {
+
+            const critter =
+                critters.find(item => item.id === id);
+
+
+            if (!critter) {
+                return;
+            }
+
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "inventory-item";
+
+
+            item.innerHTML = `
+
+                <div class="inventory-icon">
+                    ${critter.icon}
+                </div>
+
+                <div class="inventory-info">
+
+                    <div class="inventory-name">
+                        ${critter.name}
+                    </div>
+
+                    <div class="rarity ${critter.rarity.toLowerCase()}">
+                        ${critter.rarity}
+                    </div>
+
+                </div>
+
+                <strong>
+                    🪙 ${critter.price.toLocaleString()}
+                </strong>
+
+            `;
+
+
+            container.appendChild(item);
 
         });
 
-    const selectedButton =
-        document.getElementById("nav-" + page);
-
-    if (selectedButton) {
-        selectedButton.classList.add("active");
     }
 
+
+    function buyCritter(id) {
+
+        const critter =
+            critters.find(item => item.id === id);
+
+
+        if (!critter) {
+            return;
+        }
+
+
+        if (inventory.includes(id)) {
+
+            showToast(
+                "You already own this Critter!"
+            );
+
+            return;
+
+        }
+
+
+        if (coins < critter.price) {
+
+            showToast(
+                "Not enough coins!"
+            );
+
+            return;
+
+        }
+
+
+        coins -= critter.price;
+
+        spent += critter.price;
+
+        inventory.push(id);
+
+
+        saveData();
+
+        updateUI();
+
+
+        showToast(
+            `${critter.icon} ${critter.name} added to your collection!`
+        );
+
+    }
+
+
+    function chooseRarity(chances) {
+
+        const roll =
+            Math.random() * 100;
+
+        let total = 0;
+
+
+        for (const entry of chances) {
+
+            const rarity =
+                entry[0];
+
+            const chance =
+                entry[1];
+
+
+            total += chance;
+
+
+            if (roll <= total) {
+                return rarity;
+            }
+
+        }
+
+
+        return chances[chances.length - 1][0];
+
+    }
+
+
+    function openBox(type) {
+
+        const box =
+            boxSettings[type];
+
+
+        if (!box) {
+            return;
+        }
+
+
+        if (coins < box.price) {
+
+            showToast(
+                "Not enough coins!"
+            );
+
+            return;
+
+        }
+
+
+        coins -= box.price;
+
+        spent += box.price;
+
+
+        const rarity =
+            chooseRarity(box.chances);
+
+
+        const possible =
+            critters.filter(
+                critter => critter.rarity === rarity
+            );
+
+
+        const reward =
+            possible[
+                Math.floor(
+                    Math.random() * possible.length
+                )
+            ];
+
+
+        if (!inventory.includes(reward.id)) {
+
+            inventory.push(reward.id);
+
+        }
+
+
+        saveData();
+
+        updateUI();
+
+        showReward(reward);
+
+    }
+
+
+    function showReward(critter) {
+
+        document.getElementById("reward-icon")
+            .textContent =
+            critter.icon;
+
+
+        document.getElementById("reward-title")
+            .textContent =
+            critter.name;
+
+
+        document.getElementById("reward-rarity")
+            .textContent =
+            critter.rarity;
+
+
+        document.getElementById("reward-rarity")
+            .className =
+            "reward-rarity " +
+            critter.rarity.toLowerCase();
+
+
+        document.getElementById("reward-modal")
+            .classList.add("show");
+
+    }
+
+
+    function closeReward() {
+
+        document.getElementById("reward-modal")
+            .classList.remove("show");
+
+    }
+
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add("show");
+
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2500);
+
+    }
+
+
+    document.getElementById("reward-modal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === this) {
+                    closeReward();
+                }
+
+            }
+        );
+
+
     updateUI();
-
-}
-
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent =
-        message;
-
-    toast.classList.add("show");
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 2200);
-
-}
-
-
-updateUI();
 
 </script>
 
