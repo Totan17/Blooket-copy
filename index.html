@@ -20,10 +20,6 @@ body {
     min-height: 100vh;
 }
 
-/* =========================
-   TOP NAV
-========================= */
-
 .navbar {
     min-height: 72px;
     background: white;
@@ -77,10 +73,6 @@ body {
     margin-left: 10px;
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .container {
     max-width: 1200px;
     margin: auto;
@@ -94,10 +86,6 @@ body {
 .page.active {
     display: block;
 }
-
-/* =========================
-   HERO
-========================= */
 
 .hero {
     background: linear-gradient(135deg, #6752f0, #8b68ff);
@@ -118,9 +106,15 @@ body {
     font-size: 17px;
 }
 
-/* =========================
-   SECTION HEADER
-========================= */
+.balance-box {
+    margin-top: 20px;
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+}
 
 .section-header {
     display: flex;
@@ -137,10 +131,6 @@ body {
     color: #666;
     font-weight: 700;
 }
-
-/* =========================
-   ITEMS
-========================= */
 
 .item-grid {
     display: grid;
@@ -217,10 +207,6 @@ body {
     cursor: not-allowed;
 }
 
-/* =========================
-   RARITIES
-========================= */
-
 .common {
     color: #777;
 }
@@ -244,10 +230,6 @@ body {
 .mythic {
     color: #e04848;
 }
-
-/* =========================
-   BOXES
-========================= */
 
 .box-grid {
     display: grid;
@@ -299,10 +281,6 @@ body {
     cursor: not-allowed;
 }
 
-/* =========================
-   INVENTORY
-========================= */
-
 .inventory-empty {
     background: white;
     padding: 60px 20px;
@@ -315,10 +293,6 @@ body {
     font-size: 60px;
     margin-bottom: 15px;
 }
-
-/* =========================
-   PROFILE
-========================= */
 
 .profile-card {
     background: white;
@@ -360,10 +334,6 @@ body {
 .stat-label {
     color: #777;
 }
-
-/* =========================
-   MODAL
-========================= */
 
 .modal {
     position: fixed;
@@ -443,10 +413,6 @@ body {
     cursor: pointer;
 }
 
-/* =========================
-   TOAST
-========================= */
-
 .toast {
     position: fixed;
     bottom: 25px;
@@ -465,10 +431,6 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media (max-width: 900px) {
 
     .item-grid {
@@ -478,7 +440,6 @@ body {
     .box-grid {
         grid-template-columns: 1fr;
     }
-
 }
 
 @media (max-width: 650px) {
@@ -526,7 +487,6 @@ body {
     .stats {
         grid-template-columns: 1fr;
     }
-
 }
 </style>
 
@@ -570,7 +530,7 @@ body {
 </div>
 
 <div class="coin-display">
-    🪙 <span id="coins">10000</span>
+    🪙 <span id="coins">10,000</span>
 </div>
 ```
 
@@ -578,9 +538,7 @@ body {
 
 <main class="container">
 
-
-<!-- MARKET -->
-
+```
 <section id="market" class="page active">
 
     <div class="hero">
@@ -591,6 +549,11 @@ body {
             Collect awesome Critters, discover rare items,
             and build the ultimate collection.
         </p>
+
+        <div class="balance-box">
+            🪙 Your balance:
+            <span id="market-balance">10,000</span>
+        </div>
 
     </div>
 
@@ -609,8 +572,6 @@ body {
 </section>
 
 
-<!-- BOXES -->
-
 <section id="boxes" class="page">
 
     <div class="hero">
@@ -621,6 +582,11 @@ body {
             Spend your coins and discover a random Critter!
             The rarer the box, the better your chances.
         </p>
+
+        <div class="balance-box">
+            🪙 Your balance:
+            <span id="boxes-balance">10,000</span>
+        </div>
 
     </div>
 
@@ -705,8 +671,6 @@ body {
 </section>
 
 
-<!-- INVENTORY -->
-
 <section id="inventory" class="page">
 
     <div class="hero">
@@ -716,6 +680,11 @@ body {
         <p>
             Every Critter you've discovered is stored here.
         </p>
+
+        <div class="balance-box">
+            🪙 Your balance:
+            <span id="inventory-balance">10,000</span>
+        </div>
 
     </div>
 
@@ -733,8 +702,6 @@ body {
 
 </section>
 
-
-<!-- PROFILE -->
 
 <section id="profile" class="page">
 
@@ -814,8 +781,6 @@ body {
 
 </main>
 
-<!-- REWARD MODAL -->
-
 <div class="modal" id="reward-modal">
 
 ```
@@ -847,15 +812,9 @@ body {
 
 </div>
 
-<!-- TOAST -->
-
 <div class="toast" id="toast"></div>
 
 <script>
-
-/* ==========================================
-   CRITTER DATA
-========================================== */
 
 const critters = [
 
@@ -958,16 +917,21 @@ const critters = [
 ];
 
 
-/* ==========================================
-   PLAYER DATA
-========================================== */
-
 /*
-    TESTING MODE
+==========================================
+TEST MODE
+==========================================
 
-    This is intentionally set to 10,000.
-    Every page refresh resets the test balance
-    back to 10,000 coins.
+IMPORTANT:
+
+We are NOT loading coins from localStorage.
+
+Every time the page loads, you get
+10,000 coins.
+
+Your inventory and coins-spent stats
+are still saved.
+==========================================
 */
 
 let coins = 10000;
@@ -978,10 +942,6 @@ let inventory =
 let coinsSpent =
     Number(localStorage.getItem("cv_spent")) || 0;
 
-
-/* ==========================================
-   SAVE DATA
-========================================== */
 
 function saveData() {
 
@@ -998,17 +958,25 @@ function saveData() {
 }
 
 
-/* ==========================================
-   UPDATE UI
-========================================== */
-
 function updateUI() {
 
-    document.getElementById("coins").textContent =
+    const formattedCoins =
         coins.toLocaleString();
 
+    document.getElementById("coins").textContent =
+        formattedCoins;
+
+    document.getElementById("market-balance").textContent =
+        formattedCoins;
+
+    document.getElementById("boxes-balance").textContent =
+        formattedCoins;
+
+    document.getElementById("inventory-balance").textContent =
+        formattedCoins;
+
     document.getElementById("profile-coins").textContent =
-        coins.toLocaleString();
+        formattedCoins;
 
     document.getElementById("profile-spent").textContent =
         coinsSpent.toLocaleString();
@@ -1031,10 +999,6 @@ function updateUI() {
 
 }
 
-
-/* ==========================================
-   MARKET
-========================================== */
 
 function renderMarket() {
 
@@ -1104,10 +1068,6 @@ function renderMarket() {
 }
 
 
-/* ==========================================
-   BUY ITEM
-========================================== */
-
 function buyItem(id) {
 
     const item =
@@ -1128,8 +1088,8 @@ function buyItem(id) {
 
     coinsSpent += item.price;
 
-    inventory[item.id] =
-        (inventory[item.id] || 0) + 1;
+    inventory[id] =
+        (inventory[id] || 0) + 1;
 
     saveData();
 
@@ -1141,10 +1101,6 @@ function buyItem(id) {
 
 }
 
-
-/* ==========================================
-   INVENTORY
-========================================== */
 
 function renderInventory() {
 
@@ -1232,10 +1188,6 @@ function renderInventory() {
 }
 
 
-/* ==========================================
-   MYSTERY BOX RANDOMIZER
-========================================== */
-
 function chooseRandomBoxItem(type) {
 
     let available = [];
@@ -1251,16 +1203,14 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Common"
                 );
 
-        }
-        else if (roll < 0.90) {
+        } else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Uncommon"
                 );
 
-        }
-        else {
+        } else {
 
             available =
                 critters.filter(
@@ -1283,24 +1233,21 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Common"
                 );
 
-        }
-        else if (roll < 0.65) {
+        } else if (roll < 0.65) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Uncommon"
                 );
 
-        }
-        else if (roll < 0.90) {
+        } else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Rare"
                 );
 
-        }
-        else {
+        } else {
 
             available =
                 critters.filter(
@@ -1323,24 +1270,21 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Rare"
                 );
 
-        }
-        else if (roll < 0.45) {
+        } else if (roll < 0.45) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Epic"
                 );
 
-        }
-        else if (roll < 0.90) {
+        } else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Legendary"
                 );
 
-        }
-        else {
+        } else {
 
             available =
                 critters.filter(
@@ -1359,10 +1303,6 @@ function chooseRandomBoxItem(type) {
 
 }
 
-
-/* ==========================================
-   OPEN BOX
-========================================== */
 
 function openBox(type) {
 
@@ -1390,16 +1330,17 @@ function openBox(type) {
         return;
     }
 
-    coins -= price;
-
-    coinsSpent += price;
-
     const reward =
         chooseRandomBoxItem(type);
 
     if (!reward) {
+        showToast("Something went wrong!");
         return;
     }
+
+    coins -= price;
+
+    coinsSpent += price;
 
     inventory[reward.id] =
         (inventory[reward.id] || 0) + 1;
@@ -1412,10 +1353,6 @@ function openBox(type) {
 
 }
 
-
-/* ==========================================
-   REWARD MODAL
-========================================== */
 
 function showReward(item) {
 
@@ -1449,10 +1386,6 @@ function closeReward() {
 }
 
 
-/* ==========================================
-   NAVIGATION
-========================================== */
-
 function showPage(page) {
 
     document.querySelectorAll(".page")
@@ -1469,7 +1402,6 @@ function showPage(page) {
         selectedPage.classList.add("active");
     }
 
-
     document.querySelectorAll(".nav-btn")
         .forEach(button => {
 
@@ -1484,12 +1416,10 @@ function showPage(page) {
         selectedButton.classList.add("active");
     }
 
+    updateUI();
+
 }
 
-
-/* ==========================================
-   TOAST
-========================================== */
 
 function showToast(message) {
 
@@ -1509,10 +1439,6 @@ function showToast(message) {
 
 }
 
-
-/* ==========================================
-   START
-========================================== */
 
 updateUI();
 
