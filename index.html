@@ -25,12 +25,12 @@ body {
 ========================= */
 
 .navbar {
-    height: 72px;
+    min-height: 72px;
     background: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 32px;
+    padding: 12px 32px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
@@ -290,6 +290,15 @@ body {
     cursor: pointer;
 }
 
+.open-btn:hover {
+    background: #4934d5;
+}
+
+.open-btn:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+}
+
 /* =========================
    INVENTORY
 ========================= */
@@ -385,6 +394,7 @@ body {
         transform: scale(0.75);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
@@ -398,9 +408,17 @@ body {
 }
 
 @keyframes bounce {
-    0% { transform: scale(0.2) rotate(-20deg); }
-    60% { transform: scale(1.15) rotate(8deg); }
-    100% { transform: scale(1) rotate(0); }
+    0% {
+        transform: scale(0.2) rotate(-20deg);
+    }
+
+    60% {
+        transform: scale(1.15) rotate(8deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
 }
 
 .reward-title {
@@ -452,6 +470,7 @@ body {
 ========================= */
 
 @media (max-width: 900px) {
+
     .item-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -459,9 +478,11 @@ body {
     .box-grid {
         grid-template-columns: 1fr;
     }
+
 }
 
 @media (max-width: 650px) {
+
     .navbar {
         height: auto;
         padding: 14px;
@@ -505,16 +526,13 @@ body {
     .stats {
         grid-template-columns: 1fr;
     }
+
 }
 </style>
 
 </head>
 
 <body>
-
-<!-- =========================
-     NAVIGATION
-========================= -->
 
 <nav class="navbar">
 
@@ -552,7 +570,7 @@ body {
 </div>
 
 <div class="coin-display">
-    🪙 <span id="coins">1000</span>
+    🪙 <span id="coins">10000</span>
 </div>
 ```
 
@@ -560,219 +578,252 @@ body {
 
 <main class="container">
 
-<!-- =========================
-     MARKET
-========================= -->
+
+<!-- MARKET -->
 
 <section id="market" class="page active">
 
-```
-<div class="hero">
-    <h1>Welcome to the Market! 🛍️</h1>
-    <p>
-        Collect awesome Critters, discover rare items,
-        and build the ultimate collection.
-    </p>
-</div>
+    <div class="hero">
 
-<div class="section-header">
-    <h2>Featured Critters</h2>
+        <h1>Welcome to the Market! 🛍️</h1>
 
-    <div class="collection-count">
-        <span id="market-owned">0</span> / 12 collected
+        <p>
+            Collect awesome Critters, discover rare items,
+            and build the ultimate collection.
+        </p>
+
     </div>
-</div>
 
-<div class="item-grid" id="market-items"></div>
-```
+    <div class="section-header">
+
+        <h2>Featured Critters</h2>
+
+        <div class="collection-count">
+            <span id="market-owned">0</span> / 12 collected
+        </div>
+
+    </div>
+
+    <div class="item-grid" id="market-items"></div>
 
 </section>
 
-<!-- =========================
-     BOXES
-========================= -->
+
+<!-- BOXES -->
 
 <section id="boxes" class="page">
 
-```
-<div class="hero">
-    <h1>🎁 Mystery Boxes</h1>
-    <p>
-        Spend your coins and discover a random Critter!
-        The rarer the box, the better your chances.
-    </p>
-</div>
+    <div class="hero">
 
-<div class="box-grid">
-
-    <div class="box-card">
-
-        <div class="box-icon">📦</div>
-
-        <h3>Basic Box</h3>
+        <h1>🎁 Mystery Boxes</h1>
 
         <p>
-            A small box containing a random
-            Common, Uncommon or Rare Critter.
+            Spend your coins and discover a random Critter!
+            The rarer the box, the better your chances.
         </p>
-
-        <div class="price">🪙 100</div>
-
-        <br><br>
-
-        <button class="open-btn"
-                onclick="openBox('basic')">
-            Open Box
-        </button>
 
     </div>
 
+    <div class="box-grid">
 
-    <div class="box-card">
+        <div class="box-card">
 
-        <div class="box-icon">🎁</div>
+            <div class="box-icon">📦</div>
 
-        <h3>Super Box</h3>
+            <h3>Basic Box</h3>
 
-        <p>
-            Better chances of receiving
-            Rare and Epic Critters.
-        </p>
+            <p>
+                A small box containing a random
+                Common, Uncommon or Rare Critter.
+            </p>
 
-        <div class="price">🪙 300</div>
+            <div class="price">
+                🪙 100
+            </div>
 
-        <br><br>
+            <br><br>
 
-        <button class="open-btn"
-                onclick="openBox('super')">
-            Open Box
-        </button>
+            <button class="open-btn"
+                    onclick="openBox('basic')">
+                Open Box
+            </button>
+
+        </div>
+
+
+        <div class="box-card">
+
+            <div class="box-icon">🎁</div>
+
+            <h3>Super Box</h3>
+
+            <p>
+                Better chances of receiving
+                Rare and Epic Critters.
+            </p>
+
+            <div class="price">
+                🪙 300
+            </div>
+
+            <br><br>
+
+            <button class="open-btn"
+                    onclick="openBox('super')">
+                Open Box
+            </button>
+
+        </div>
+
+
+        <div class="box-card">
+
+            <div class="box-icon">💎</div>
+
+            <h3>Legend Box</h3>
+
+            <p>
+                A premium box with a chance
+                to discover Legendary and Mythic Critters.
+            </p>
+
+            <div class="price">
+                🪙 750
+            </div>
+
+            <br><br>
+
+            <button class="open-btn"
+                    onclick="openBox('legend')">
+                Open Box
+            </button>
+
+        </div>
 
     </div>
-
-
-    <div class="box-card">
-
-        <div class="box-icon">💎</div>
-
-        <h3>Legend Box</h3>
-
-        <p>
-            A premium box with a chance
-            to discover Legendary and Mythic Critters.
-        </p>
-
-        <div class="price">🪙 750</div>
-
-        <br><br>
-
-        <button class="open-btn"
-                onclick="openBox('legend')">
-            Open Box
-        </button>
-
-    </div>
-
-</div>
-```
 
 </section>
 
-<!-- =========================
-     INVENTORY
-========================= -->
+
+<!-- INVENTORY -->
 
 <section id="inventory" class="page">
 
-```
-<div class="hero">
-    <h1>🎒 Your Collection</h1>
-    <p>
-        Every Critter you've discovered is stored here.
-    </p>
-</div>
+    <div class="hero">
 
-<div class="section-header">
-    <h2>Inventory</h2>
+        <h1>🎒 Your Collection</h1>
 
-    <div class="collection-count">
-        <span id="inventory-count">0</span> / 12
+        <p>
+            Every Critter you've discovered is stored here.
+        </p>
+
     </div>
-</div>
 
-<div id="inventory-items"></div>
-```
+    <div class="section-header">
+
+        <h2>Inventory</h2>
+
+        <div class="collection-count">
+            <span id="inventory-count">0</span> / 12
+        </div>
+
+    </div>
+
+    <div id="inventory-items"></div>
 
 </section>
 
-<!-- =========================
-     PROFILE
-========================= -->
+
+<!-- PROFILE -->
 
 <section id="profile" class="page">
 
-```
-<div class="hero">
-    <h1>👤 Player Profile</h1>
-    <p>Your CritterVault statistics.</p>
-</div>
+    <div class="hero">
 
-<div class="profile-card">
+        <h1>👤 Player Profile</h1>
 
-    <div class="avatar">🧑‍🚀</div>
+        <p>
+            Your CritterVault statistics.
+        </p>
 
-    <h2>Critter Collector</h2>
+    </div>
 
-    <p>Welcome to CritterVault!</p>
+    <div class="profile-card">
 
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-number" id="profile-coins">
-                1000
-            </div>
-            <div class="stat-label">
-                Coins
-            </div>
+        <div class="avatar">
+            🧑‍🚀
         </div>
 
-        <div class="stat">
-            <div class="stat-number" id="profile-items">
-                0
-            </div>
-            <div class="stat-label">
-                Critters
-            </div>
-        </div>
+        <h2>
+            Critter Collector
+        </h2>
 
-        <div class="stat">
-            <div class="stat-number" id="profile-spent">
-                0
+        <p>
+            Welcome to CritterVault!
+        </p>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-number"
+                     id="profile-coins">
+                    10000
+                </div>
+
+                <div class="stat-label">
+                    Coins
+                </div>
+
             </div>
-            <div class="stat-label">
-                Coins Spent
+
+
+            <div class="stat">
+
+                <div class="stat-number"
+                     id="profile-items">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Critters
+                </div>
+
             </div>
+
+
+            <div class="stat">
+
+                <div class="stat-number"
+                     id="profile-spent">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Coins Spent
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
-```
-
 </section>
+```
 
 </main>
 
-<!-- =========================
-     REWARD MODAL
-========================= -->
+<!-- REWARD MODAL -->
 
 <div class="modal" id="reward-modal">
 
 ```
 <div class="modal-content">
 
-    <h2>You got...</h2>
+    <h2>
+        You got...
+    </h2>
 
     <div class="reward-icon" id="reward-icon">
         🎁
@@ -796,9 +847,7 @@ body {
 
 </div>
 
-<!-- =========================
-     TOAST
-========================= -->
+<!-- TOAST -->
 
 <div class="toast" id="toast"></div>
 
@@ -913,11 +962,15 @@ const critters = [
    PLAYER DATA
 ========================================== */
 
-let coins = Number(localStorage.getItem("cv_coins"));
+/*
+    TESTING MODE
 
-if (isNaN(coins)) {
-    coins = 1000;
-}
+    This is intentionally set to 10,000.
+    Every page refresh resets the test balance
+    back to 10,000 coins.
+*/
+
+let coins = 10000;
 
 let inventory =
     JSON.parse(localStorage.getItem("cv_inventory")) || {};
@@ -931,11 +984,6 @@ let coinsSpent =
 ========================================== */
 
 function saveData() {
-
-    localStorage.setItem(
-        "cv_coins",
-        coins
-    );
 
     localStorage.setItem(
         "cv_inventory",
@@ -978,6 +1026,7 @@ function updateUI() {
         owned;
 
     renderMarket();
+
     renderInventory();
 
 }
@@ -1022,11 +1071,20 @@ function renderMarket() {
                 🪙 ${item.price.toLocaleString()}
             </div>
 
-            ${owned > 0
-                ? `<div style="margin-bottom:10px;color:#666;font-weight:700;">
+            ${
+                owned > 0
+                ?
+                `
+                <div style="
+                    margin-bottom:10px;
+                    color:#666;
+                    font-weight:700;
+                ">
                     Owned: ${owned}
-                   </div>`
-                : ""
+                </div>
+                `
+                :
+                ""
             }
 
             <button
@@ -1055,7 +1113,9 @@ function buyItem(id) {
     const item =
         critters.find(c => c.id === id);
 
-    if (!item) return;
+    if (!item) {
+        return;
+    }
 
     if (coins < item.price) {
 
@@ -1068,8 +1128,8 @@ function buyItem(id) {
 
     coinsSpent += item.price;
 
-    inventory[id] =
-        (inventory[id] || 0) + 1;
+    inventory[item.id] =
+        (inventory[item.id] || 0) + 1;
 
     saveData();
 
@@ -1104,9 +1164,13 @@ function renderInventory() {
 
             <div class="inventory-empty">
 
-                <div>🎒</div>
+                <div>
+                    🎒
+                </div>
 
-                <h2>Your inventory is empty</h2>
+                <h2>
+                    Your inventory is empty
+                </h2>
 
                 <p>
                     Visit the Market or open a Mystery Box
@@ -1178,18 +1242,6 @@ function chooseRandomBoxItem(type) {
 
     if (type === "basic") {
 
-        available = critters.filter(item =>
-            ["Common", "Uncommon", "Rare"]
-            .includes(item.rarity)
-        );
-
-        /*
-           Basic:
-           Common = 65%
-           Uncommon = 25%
-           Rare = 10%
-        */
-
         const roll = Math.random();
 
         if (roll < 0.65) {
@@ -1199,14 +1251,16 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Common"
                 );
 
-        } else if (roll < 0.90) {
+        }
+        else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Uncommon"
                 );
 
-        } else {
+        }
+        else {
 
             available =
                 critters.filter(
@@ -1229,21 +1283,24 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Common"
                 );
 
-        } else if (roll < 0.65) {
+        }
+        else if (roll < 0.65) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Uncommon"
                 );
 
-        } else if (roll < 0.90) {
+        }
+        else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Rare"
                 );
 
-        } else {
+        }
+        else {
 
             available =
                 critters.filter(
@@ -1266,21 +1323,24 @@ function chooseRandomBoxItem(type) {
                     item => item.rarity === "Rare"
                 );
 
-        } else if (roll < 0.45) {
+        }
+        else if (roll < 0.45) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Epic"
                 );
 
-        } else if (roll < 0.90) {
+        }
+        else if (roll < 0.90) {
 
             available =
                 critters.filter(
                     item => item.rarity === "Legendary"
                 );
 
-        } else {
+        }
+        else {
 
             available =
                 critters.filter(
@@ -1307,13 +1367,21 @@ function chooseRandomBoxItem(type) {
 function openBox(type) {
 
     const prices = {
+
         basic: 100,
+
         super: 300,
+
         legend: 750
+
     };
 
     const price =
         prices[type];
+
+    if (!price) {
+        return;
+    }
 
     if (coins < price) {
 
@@ -1328,6 +1396,10 @@ function openBox(type) {
 
     const reward =
         chooseRandomBoxItem(type);
+
+    if (!reward) {
+        return;
+    }
 
     inventory[reward.id] =
         (inventory[reward.id] || 0) + 1;
@@ -1353,10 +1425,13 @@ function showReward(item) {
     document.getElementById("reward-title").textContent =
         item.name;
 
-    document.getElementById("reward-rarity").textContent =
+    const rarity =
+        document.getElementById("reward-rarity");
+
+    rarity.textContent =
         item.rarity;
 
-    document.getElementById("reward-rarity").className =
+    rarity.className =
         "reward-rarity " +
         item.rarity.toLowerCase();
 
@@ -1387,8 +1462,12 @@ function showPage(page) {
 
         });
 
-    document.getElementById(page)
-        .classList.add("active");
+    const selectedPage =
+        document.getElementById(page);
+
+    if (selectedPage) {
+        selectedPage.classList.add("active");
+    }
 
 
     document.querySelectorAll(".nav-btn")
@@ -1398,8 +1477,12 @@ function showPage(page) {
 
         });
 
-    document.getElementById("nav-" + page)
-        .classList.add("active");
+    const selectedButton =
+        document.getElementById("nav-" + page);
+
+    if (selectedButton) {
+        selectedButton.classList.add("active");
+    }
 
 }
 
