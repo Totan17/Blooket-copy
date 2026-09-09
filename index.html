@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CritterVault — Market</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fb;
+    color: #222;
+    min-height: 100vh;
+}
+
+/* =========================
+   TOP NAV
+========================= */
+
+.navbar {
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #5b45e8;
+    cursor: pointer;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    border: none;
+    background: transparent;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.nav-btn:hover {
+    background: #f0efff;
+}
+
+.nav-btn.active {
+    background: #5b45e8;
+    color: white;
+}
+
+.coin-display {
+    background: #fff4c7;
+    color: #8b6500;
+    padding: 11px 17px;
+    border-radius: 20px;
+    font-weight: 800;
+    margin-left: 10px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 25px 70px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    background: linear-gradient(135deg, #6752f0, #8b68ff);
+    color: white;
+    border-radius: 22px;
+    padding: 38px;
+    margin-bottom: 30px;
+    box-shadow: 0 12px 35px rgba(91,69,232,0.25);
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    opacity: 0.92;
+    font-size: 17px;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 27px;
+}
+
+.collection-count {
+    color: #666;
+    font-weight: 700;
+}
+
+/* =========================
+   ITEMS
+========================= */
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.item-card {
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 9px 25px rgba(0,0,0,0.11);
+}
+
+.item-image {
+    height: 155px;
+    border-radius: 14px;
+    background: #f1f2f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 76px;
+    margin-bottom: 15px;
+}
+
+.item-name {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 7px;
+}
+
+.item-rarity {
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.price {
+    font-weight: 900;
+    color: #8b6500;
+    background: #fff4c7;
+    padding: 7px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.buy-btn {
+    width: 100%;
+    border: none;
+    background: #5b45e8;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.buy-btn:hover {
+    background: #4934d5;
+}
+
+.buy-btn:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+}
+
+/* =========================
+   RARITIES
+========================= */
+
+.common {
+    color: #777;
+}
+
+.uncommon {
+    color: #28a745;
+}
+
+.rare {
+    color: #2878df;
+}
+
+.epic {
+    color: #8b45db;
+}
+
+.legendary {
+    color: #e09a00;
+}
+
+.mythic {
+    color: #e04848;
+}
+
+/* =========================
+   BOXES
+========================= */
+
+.box-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.box-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.box-icon {
+    font-size: 90px;
+    margin-bottom: 15px;
+}
+
+.box-card h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.box-card p {
+    color: #666;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.open-btn {
+    border: none;
+    background: #5b45e8;
+    color: white;
+    padding: 13px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* =========================
+   INVENTORY
+========================= */
+
+.inventory-empty {
+    background: white;
+    padding: 60px 20px;
+    text-align: center;
+    border-radius: 18px;
+    color: #777;
+}
+
+.inventory-empty div {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.avatar {
+    font-size: 90px;
+    margin-bottom: 15px;
+}
+
+.profile-card h2 {
+    margin-bottom: 8px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.stat {
+    background: #f4f5fa;
+    padding: 20px;
+    border-radius: 14px;
+}
+
+.stat-number {
+    font-size: 27px;
+    font-weight: 900;
+    color: #5b45e8;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #777;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 25px;
+    width: min(450px, 100%);
+    padding: 35px;
+    text-align: center;
+    animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(0.75);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.reward-icon {
+    font-size: 110px;
+    margin: 20px;
+    animation: bounce 0.7s ease;
+}
+
+@keyframes bounce {
+    0% { transform: scale(0.2) rotate(-20deg); }
+    60% { transform: scale(1.15) rotate(8deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+.reward-title {
+    font-size: 29px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.reward-rarity {
+    font-size: 17px;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    border: none;
+    background: #222;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #222;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: transform 0.3s;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+    .item-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .box-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        height: auto;
+        padding: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .logo {
+        width: 100%;
+    }
+
+    .nav-buttons {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .nav-btn {
+        white-space: nowrap;
+    }
+
+    .coin-display {
+        margin-left: 0;
+    }
+
+    .container {
+        padding: 20px 14px 50px;
+    }
+
+    .hero {
+        padding: 25px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .item-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="navbar">
+
+```
+<div class="logo" onclick="showPage('market')">
+    🐾 CritterVault
+</div>
+
+<div class="nav-buttons">
+
+    <button class="nav-btn active"
+            onclick="showPage('market')"
+            id="nav-market">
+        🛍️ Market
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('boxes')"
+            id="nav-boxes">
+        🎁 Boxes
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('inventory')"
+            id="nav-inventory">
+        🎒 Inventory
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('profile')"
+            id="nav-profile">
+        👤 Profile
+    </button>
+
+</div>
+
+<div class="coin-display">
+    🪙 <span id="coins">1000</span>
+</div>
+```
+
+</nav>
+
+<main class="container">
+
+<!-- =========================
+     MARKET
+========================= -->
+
+<section id="market" class="page active">
+
+```
+<div class="hero">
+    <h1>Welcome to the Market! 🛍️</h1>
+    <p>
+        Collect awesome Critters, discover rare items,
+        and build the ultimate collection.
+    </p>
+</div>
+
+<div class="section-header">
+    <h2>Featured Critters</h2>
+
+    <div class="collection-count">
+        <span id="market-owned">0</span> / 12 collected
+    </div>
+</div>
+
+<div class="item-grid" id="market-items"></div>
+```
+
+</section>
+
+<!-- =========================
+     BOXES
+========================= -->
+
+<section id="boxes" class="page">
+
+```
+<div class="hero">
+    <h1>🎁 Mystery Boxes</h1>
+    <p>
+        Spend your coins and discover a random Critter!
+        The rarer the box, the better your chances.
+    </p>
+</div>
+
+<div class="box-grid">
+
+    <div class="box-card">
+
+        <div class="box-icon">📦</div>
+
+        <h3>Basic Box</h3>
+
+        <p>
+            A small box containing a random
+            Common, Uncommon or Rare Critter.
+        </p>
+
+        <div class="price">🪙 100</div>
+
+        <br><br>
+
+        <button class="open-btn"
+                onclick="openBox('basic')">
+            Open Box
+        </button>
+
+    </div>
+
+
+    <div class="box-card">
+
+        <div class="box-icon">🎁</div>
+
+        <h3>Super Box</h3>
+
+        <p>
+            Better chances of receiving
+            Rare and Epic Critters.
+        </p>
+
+        <div class="price">🪙 300</div>
+
+        <br><br>
+
+        <button class="open-btn"
+                onclick="openBox('super')">
+            Open Box
+        </button>
+
+    </div>
+
+
+    <div class="box-card">
+
+        <div class="box-icon">💎</div>
+
+        <h3>Legend Box</h3>
+
+        <p>
+            A premium box with a chance
+            to discover Legendary and Mythic Critters.
+        </p>
+
+        <div class="price">🪙 750</div>
+
+        <br><br>
+
+        <button class="open-btn"
+                onclick="openBox('legend')">
+            Open Box
+        </button>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =========================
+     INVENTORY
+========================= -->
+
+<section id="inventory" class="page">
+
+```
+<div class="hero">
+    <h1>🎒 Your Collection</h1>
+    <p>
+        Every Critter you've discovered is stored here.
+    </p>
+</div>
+
+<div class="section-header">
+    <h2>Inventory</h2>
+
+    <div class="collection-count">
+        <span id="inventory-count">0</span> / 12
+    </div>
+</div>
+
+<div id="inventory-items"></div>
+```
+
+</section>
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<section id="profile" class="page">
+
+```
+<div class="hero">
+    <h1>👤 Player Profile</h1>
+    <p>Your CritterVault statistics.</p>
+</div>
+
+<div class="profile-card">
+
+    <div class="avatar">🧑‍🚀</div>
+
+    <h2>Critter Collector</h2>
+
+    <p>Welcome to CritterVault!</p>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-number" id="profile-coins">
+                1000
+            </div>
+            <div class="stat-label">
+                Coins
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number" id="profile-items">
+                0
+            </div>
+            <div class="stat-label">
+                Critters
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number" id="profile-spent">
+                0
+            </div>
+            <div class="stat-label">
+                Coins Spent
+            </div>
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<!-- =========================
+     REWARD MODAL
+========================= -->
+
+<div class="modal" id="reward-modal">
+
+```
+<div class="modal-content">
+
+    <h2>You got...</h2>
+
+    <div class="reward-icon" id="reward-icon">
+        🎁
+    </div>
+
+    <div class="reward-title" id="reward-title">
+        Critter
+    </div>
+
+    <div class="reward-rarity" id="reward-rarity">
+        Rare
+    </div>
+
+    <button class="close-btn"
+            onclick="closeReward()">
+        Awesome!
+    </button>
+
+</div>
+```
+
+</div>
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* ==========================================
+   CRITTER DATA
+========================================== */
+
+const critters = [
+
+    {
+        id: "spark",
+        name: "Spark",
+        emoji: "⚡",
+        rarity: "Common",
+        price: 100
+    },
+
+    {
+        id: "puff",
+        name: "Puff",
+        emoji: "☁️",
+        rarity: "Common",
+        price: 120
+    },
+
+    {
+        id: "leafy",
+        name: "Leafy",
+        emoji: "🌿",
+        rarity: "Common",
+        price: 150
+    },
+
+    {
+        id: "bubble",
+        name: "Bubble",
+        emoji: "🫧",
+        rarity: "Uncommon",
+        price: 250
+    },
+
+    {
+        id: "berry",
+        name: "Berry",
+        emoji: "🍓",
+        rarity: "Uncommon",
+        price: 275
+    },
+
+    {
+        id: "frost",
+        name: "Frost",
+        emoji: "❄️",
+        rarity: "Rare",
+        price: 400
+    },
+
+    {
+        id: "shadow",
+        name: "Shadow",
+        emoji: "🌑",
+        rarity: "Rare",
+        price: 450
+    },
+
+    {
+        id: "neon",
+        name: "Neon",
+        emoji: "🌈",
+        rarity: "Epic",
+        price: 700
+    },
+
+    {
+        id: "galaxy",
+        name: "Galaxy",
+        emoji: "🌌",
+        rarity: "Epic",
+        price: 850
+    },
+
+    {
+        id: "dragon",
+        name: "Dragon",
+        emoji: "🐉",
+        rarity: "Legendary",
+        price: 1500
+    },
+
+    {
+        id: "phoenix",
+        name: "Phoenix",
+        emoji: "🔥",
+        rarity: "Legendary",
+        price: 1800
+    },
+
+    {
+        id: "cosmic",
+        name: "Cosmic",
+        emoji: "🌠",
+        rarity: "Mythic",
+        price: 3500
+    }
+
+];
+
+
+/* ==========================================
+   PLAYER DATA
+========================================== */
+
+let coins = Number(localStorage.getItem("cv_coins"));
+
+if (isNaN(coins)) {
+    coins = 1000;
+}
+
+let inventory =
+    JSON.parse(localStorage.getItem("cv_inventory")) || {};
+
+let coinsSpent =
+    Number(localStorage.getItem("cv_spent")) || 0;
+
+
+/* ==========================================
+   SAVE DATA
+========================================== */
+
+function saveData() {
+
+    localStorage.setItem(
+        "cv_coins",
+        coins
+    );
+
+    localStorage.setItem(
+        "cv_inventory",
+        JSON.stringify(inventory)
+    );
+
+    localStorage.setItem(
+        "cv_spent",
+        coinsSpent
+    );
+
+}
+
+
+/* ==========================================
+   UPDATE UI
+========================================== */
+
+function updateUI() {
+
+    document.getElementById("coins").textContent =
+        coins.toLocaleString();
+
+    document.getElementById("profile-coins").textContent =
+        coins.toLocaleString();
+
+    document.getElementById("profile-spent").textContent =
+        coinsSpent.toLocaleString();
+
+    const owned =
+        Object.keys(inventory).length;
+
+    document.getElementById("market-owned").textContent =
+        owned;
+
+    document.getElementById("inventory-count").textContent =
+        owned;
+
+    document.getElementById("profile-items").textContent =
+        owned;
+
+    renderMarket();
+    renderInventory();
+
+}
+
+
+/* ==========================================
+   MARKET
+========================================== */
+
+function renderMarket() {
+
+    const container =
+        document.getElementById("market-items");
+
+    container.innerHTML = "";
+
+    critters.forEach(item => {
+
+        const owned =
+            inventory[item.id] || 0;
+
+        const card =
+            document.createElement("div");
+
+        card.className = "item-card";
+
+        card.innerHTML = `
+
+            <div class="item-image">
+                ${item.emoji}
+            </div>
+
+            <div class="item-name">
+                ${item.name}
+            </div>
+
+            <div class="item-rarity ${item.rarity.toLowerCase()}">
+                ${item.rarity}
+            </div>
+
+            <div class="price">
+                🪙 ${item.price.toLocaleString()}
+            </div>
+
+            ${owned > 0
+                ? `<div style="margin-bottom:10px;color:#666;font-weight:700;">
+                    Owned: ${owned}
+                   </div>`
+                : ""
+            }
+
+            <button
+                class="buy-btn"
+                onclick="buyItem('${item.id}')"
+                ${coins < item.price ? "disabled" : ""}
+            >
+                Buy
+            </button>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================
+   BUY ITEM
+========================================== */
+
+function buyItem(id) {
+
+    const item =
+        critters.find(c => c.id === id);
+
+    if (!item) return;
+
+    if (coins < item.price) {
+
+        showToast("Not enough coins!");
+
+        return;
+    }
+
+    coins -= item.price;
+
+    coinsSpent += item.price;
+
+    inventory[id] =
+        (inventory[id] || 0) + 1;
+
+    saveData();
+
+    updateUI();
+
+    showToast(
+        `You bought ${item.name}! ${item.emoji}`
+    );
+
+}
+
+
+/* ==========================================
+   INVENTORY
+========================================== */
+
+function renderInventory() {
+
+    const container =
+        document.getElementById("inventory-items");
+
+    container.innerHTML = "";
+
+    const ownedItems =
+        critters.filter(
+            item => inventory[item.id]
+        );
+
+    if (ownedItems.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="inventory-empty">
+
+                <div>🎒</div>
+
+                <h2>Your inventory is empty</h2>
+
+                <p>
+                    Visit the Market or open a Mystery Box
+                    to get your first Critter!
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    const grid =
+        document.createElement("div");
+
+    grid.className = "item-grid";
+
+    ownedItems.forEach(item => {
+
+        const quantity =
+            inventory[item.id];
+
+        const card =
+            document.createElement("div");
+
+        card.className = "item-card";
+
+        card.innerHTML = `
+
+            <div class="item-image">
+                ${item.emoji}
+            </div>
+
+            <div class="item-name">
+                ${item.name}
+            </div>
+
+            <div class="item-rarity ${item.rarity.toLowerCase()}">
+                ${item.rarity}
+            </div>
+
+            <div style="
+                font-weight:800;
+                color:#666;
+                margin-top:8px;
+            ">
+                Owned × ${quantity}
+            </div>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+    container.appendChild(grid);
+
+}
+
+
+/* ==========================================
+   MYSTERY BOX RANDOMIZER
+========================================== */
+
+function chooseRandomBoxItem(type) {
+
+    let available = [];
+
+    if (type === "basic") {
+
+        available = critters.filter(item =>
+            ["Common", "Uncommon", "Rare"]
+            .includes(item.rarity)
+        );
+
+        /*
+           Basic:
+           Common = 65%
+           Uncommon = 25%
+           Rare = 10%
+        */
+
+        const roll = Math.random();
+
+        if (roll < 0.65) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Common"
+                );
+
+        } else if (roll < 0.90) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Uncommon"
+                );
+
+        } else {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Rare"
+                );
+
+        }
+
+    }
+
+
+    if (type === "super") {
+
+        const roll = Math.random();
+
+        if (roll < 0.35) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Common"
+                );
+
+        } else if (roll < 0.65) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Uncommon"
+                );
+
+        } else if (roll < 0.90) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Rare"
+                );
+
+        } else {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Epic"
+                );
+
+        }
+
+    }
+
+
+    if (type === "legend") {
+
+        const roll = Math.random();
+
+        if (roll < 0.10) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Rare"
+                );
+
+        } else if (roll < 0.45) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Epic"
+                );
+
+        } else if (roll < 0.90) {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Legendary"
+                );
+
+        } else {
+
+            available =
+                critters.filter(
+                    item => item.rarity === "Mythic"
+                );
+
+        }
+
+    }
+
+    return available[
+        Math.floor(
+            Math.random() * available.length
+        )
+    ];
+
+}
+
+
+/* ==========================================
+   OPEN BOX
+========================================== */
+
+function openBox(type) {
+
+    const prices = {
+        basic: 100,
+        super: 300,
+        legend: 750
+    };
+
+    const price =
+        prices[type];
+
+    if (coins < price) {
+
+        showToast("Not enough coins!");
+
+        return;
+    }
+
+    coins -= price;
+
+    coinsSpent += price;
+
+    const reward =
+        chooseRandomBoxItem(type);
+
+    inventory[reward.id] =
+        (inventory[reward.id] || 0) + 1;
+
+    saveData();
+
+    updateUI();
+
+    showReward(reward);
+
+}
+
+
+/* ==========================================
+   REWARD MODAL
+========================================== */
+
+function showReward(item) {
+
+    document.getElementById("reward-icon").textContent =
+        item.emoji;
+
+    document.getElementById("reward-title").textContent =
+        item.name;
+
+    document.getElementById("reward-rarity").textContent =
+        item.rarity;
+
+    document.getElementById("reward-rarity").className =
+        "reward-rarity " +
+        item.rarity.toLowerCase();
+
+    document.getElementById("reward-modal")
+        .classList.add("show");
+
+}
+
+
+function closeReward() {
+
+    document.getElementById("reward-modal")
+        .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+function showPage(page) {
+
+    document.querySelectorAll(".page")
+        .forEach(section => {
+
+            section.classList.remove("active");
+
+        });
+
+    document.getElementById(page)
+        .classList.add("active");
+
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(button => {
+
+            button.classList.remove("active");
+
+        });
+
+    document.getElementById("nav-" + page)
+        .classList.add("active");
+
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+updateUI();
+
+</script>
+
+</body>
+</html>
