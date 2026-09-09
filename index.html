@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CritterVault — Market</title>
 
-```
-<title>CritterVault — Market</title>
 
 <style>
     * {
@@ -553,7 +552,7 @@
         }
     }
 </style>
-```
+
 
 </head>
 
@@ -561,7 +560,7 @@
 
 <header>
 
-```
+
 <div class="logo" onclick="showPage('market')">
     🐾 CritterVault
 </div>
@@ -597,13 +596,13 @@
 <div class="coin-display">
     🪙 <span id="coins">10,000</span>
 </div>
-```
+
 
 </header>
 
 <main>
 
-```
+
 <section id="market" class="page active">
 
     <div class="hero">
@@ -842,13 +841,13 @@
     </div>
 
 </section>
-```
+
 
 </main>
 
 <div class="modal" id="reward-modal">
 
-```
+
 <div class="modal-content">
 
     <h2>
@@ -873,7 +872,7 @@
     </button>
 
 </div>
-```
+
 
 </div>
 
@@ -1194,34 +1193,63 @@
             card.className = "item-card";
 
 
-            card.innerHTML = `
+            const icon =
+                document.createElement("div");
 
-                <div class="item-icon">
-                    ${critter.icon}
-                </div>
+            icon.className = "item-icon";
+            icon.textContent = critter.icon;
 
-                <div class="item-name">
-                    ${critter.name}
-                </div>
 
-                <div class="rarity ${critter.rarity.toLowerCase()}">
-                    ${critter.rarity}
-                </div>
+            const name =
+                document.createElement("div");
 
-                <div class="item-price">
-                    🪙 ${critter.price.toLocaleString()}
-                </div>
+            name.className = "item-name";
+            name.textContent = critter.name;
 
-                <button
-                    class="buy-btn"
-                    onclick="buyCritter(${critter.id})"
-                    ${owned ? "disabled" : ""}>
 
-                    ${owned ? "Owned ✓" : "Buy"}
+            const rarity =
+                document.createElement("div");
 
-                </button>
+            rarity.className =
+                "rarity " +
+                critter.rarity.toLowerCase();
 
-            `;
+            rarity.textContent =
+                critter.rarity;
+
+
+            const price =
+                document.createElement("div");
+
+            price.className = "item-price";
+
+            price.textContent =
+                "🪙 " +
+                critter.price.toLocaleString();
+
+
+            const button =
+                document.createElement("button");
+
+            button.className = "buy-btn";
+
+            button.textContent =
+                owned ? "Owned ✓" : "Buy";
+
+            button.disabled =
+                owned;
+
+            button.onclick =
+                function() {
+                    buyCritter(critter.id);
+                };
+
+
+            card.appendChild(icon);
+            card.appendChild(name);
+            card.appendChild(rarity);
+            card.appendChild(price);
+            card.appendChild(button);
 
 
             container.appendChild(card);
@@ -1246,26 +1274,23 @@
 
         if (inventory.length === 0) {
 
-            container.innerHTML = `
+            const empty =
+                document.createElement("div");
 
-                <div class="empty-inventory">
+            empty.className =
+                "empty-inventory";
 
-                    <div style="font-size:60px;margin-bottom:15px;">
-                        🎒
-                    </div>
 
-                    <h2>
-                        Your inventory is empty
-                    </h2>
+            empty.innerHTML =
+                "<div style=\"font-size:60px;margin-bottom:15px;\">🎒</div>" +
+                "<h2>Your inventory is empty</h2>" +
+                "<p style=\"margin-top:8px;\">" +
+                "Visit the Market or open a Mystery Box " +
+                "to collect your first Critter!" +
+                "</p>";
 
-                    <p style="margin-top:8px;">
-                        Visit the Market or open a Mystery Box
-                        to collect your first Critter!
-                    </p>
 
-                </div>
-
-            `;
+            container.appendChild(empty);
 
             return;
 
@@ -1275,7 +1300,9 @@
         inventory.forEach(id => {
 
             const critter =
-                critters.find(item => item.id === id);
+                critters.find(
+                    item => item.id === id
+                );
 
 
             if (!critter) {
@@ -1290,29 +1317,59 @@
                 "inventory-item";
 
 
-            item.innerHTML = `
+            const icon =
+                document.createElement("div");
 
-                <div class="inventory-icon">
-                    ${critter.icon}
-                </div>
+            icon.className =
+                "inventory-icon";
 
-                <div class="inventory-info">
+            icon.textContent =
+                critter.icon;
 
-                    <div class="inventory-name">
-                        ${critter.name}
-                    </div>
 
-                    <div class="rarity ${critter.rarity.toLowerCase()}">
-                        ${critter.rarity}
-                    </div>
+            const info =
+                document.createElement("div");
 
-                </div>
+            info.className =
+                "inventory-info";
 
-                <strong>
-                    🪙 ${critter.price.toLocaleString()}
-                </strong>
 
-            `;
+            const name =
+                document.createElement("div");
+
+            name.className =
+                "inventory-name";
+
+            name.textContent =
+                critter.name;
+
+
+            const rarity =
+                document.createElement("div");
+
+            rarity.className =
+                "rarity " +
+                critter.rarity.toLowerCase();
+
+            rarity.textContent =
+                critter.rarity;
+
+
+            info.appendChild(name);
+            info.appendChild(rarity);
+
+
+            const value =
+                document.createElement("strong");
+
+            value.textContent =
+                "🪙 " +
+                critter.price.toLocaleString();
+
+
+            item.appendChild(icon);
+            item.appendChild(info);
+            item.appendChild(value);
 
 
             container.appendChild(item);
@@ -1325,7 +1382,9 @@
     function buyCritter(id) {
 
         const critter =
-            critters.find(item => item.id === id);
+            critters.find(
+                item => item.id === id
+            );
 
 
         if (!critter) {
@@ -1355,11 +1414,15 @@
         }
 
 
-        coins -= critter.price;
+        coins -=
+            critter.price;
 
-        spent += critter.price;
+        spent +=
+            critter.price;
 
-        inventory.push(id);
+        inventory.push(
+            critter.id
+        );
 
 
         saveData();
@@ -1368,7 +1431,10 @@
 
 
         showToast(
-            `${critter.icon} ${critter.name} added to your collection!`
+            critter.icon +
+            " " +
+            critter.name +
+            " added to your collection!"
         );
 
     }
@@ -1391,7 +1457,8 @@
                 entry[1];
 
 
-            total += chance;
+            total +=
+                chance;
 
 
             if (roll <= total) {
@@ -1401,7 +1468,9 @@
         }
 
 
-        return chances[chances.length - 1][0];
+        return chances[
+            chances.length - 1
+        ][0];
 
     }
 
@@ -1428,32 +1497,51 @@
         }
 
 
-        coins -= box.price;
+        coins -=
+            box.price;
 
-        spent += box.price;
+        spent +=
+            box.price;
 
 
         const rarity =
-            chooseRarity(box.chances);
+            chooseRarity(
+                box.chances
+            );
 
 
         const possible =
             critters.filter(
-                critter => critter.rarity === rarity
+                critter =>
+                    critter.rarity === rarity
             );
+
+
+        if (possible.length === 0) {
+
+            showToast(
+                "Something went wrong opening the box."
+            );
+
+            return;
+
+        }
 
 
         const reward =
             possible[
                 Math.floor(
-                    Math.random() * possible.length
+                    Math.random() *
+                    possible.length
                 )
             ];
 
 
         if (!inventory.includes(reward.id)) {
 
-            inventory.push(reward.id);
+            inventory.push(
+                reward.id
+            );
 
         }
 
@@ -1462,44 +1550,67 @@
 
         updateUI();
 
-        showReward(reward);
+        showReward(
+            reward
+        );
 
     }
 
 
     function showReward(critter) {
 
-        document.getElementById("reward-icon")
-            .textContent =
+        const icon =
+            document.getElementById(
+                "reward-icon"
+            );
+
+        const title =
+            document.getElementById(
+                "reward-title"
+            );
+
+        const rarity =
+            document.getElementById(
+                "reward-rarity"
+            );
+
+        const modal =
+            document.getElementById(
+                "reward-modal"
+            );
+
+
+        icon.textContent =
             critter.icon;
 
 
-        document.getElementById("reward-title")
-            .textContent =
+        title.textContent =
             critter.name;
 
 
-        document.getElementById("reward-rarity")
-            .textContent =
+        rarity.textContent =
             critter.rarity;
 
 
-        document.getElementById("reward-rarity")
-            .className =
+        rarity.className =
             "reward-rarity " +
             critter.rarity.toLowerCase();
 
 
-        document.getElementById("reward-modal")
-            .classList.add("show");
+        modal.classList.add(
+            "show"
+        );
 
     }
 
 
     function closeReward() {
 
-        document.getElementById("reward-modal")
-            .classList.remove("show");
+        document.getElementById(
+            "reward-modal"
+        ).classList.remove(
+            "show"
+        );
 
     }
 
@@ -1507,36 +1618,46 @@
     function showToast(message) {
 
         const toast =
-            document.getElementById("toast");
+            document.getElementById(
+                "toast"
+            );
 
 
         toast.textContent =
             message;
 
 
-        toast.classList.add("show");
+        toast.classList.add(
+            "show"
+        );
 
 
-        setTimeout(() => {
+        setTimeout(
+            function() {
 
-            toast.classList.remove("show");
+                toast.classList.remove(
+                    "show"
+                );
 
-        }, 2500);
+            },
+            2500
+        );
 
     }
 
 
-    document.getElementById("reward-modal")
-        .addEventListener(
-            "click",
-            function(event) {
+    document.getElementById(
+        "reward-modal"
+    ).addEventListener(
+        "click",
+        function(event) {
 
-                if (event.target === this) {
-                    closeReward();
-                }
-
+            if (event.target === this) {
+                closeReward();
             }
-        );
+
+        }
+    );
 
 
     updateUI();
